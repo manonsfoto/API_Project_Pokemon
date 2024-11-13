@@ -52,7 +52,7 @@ function renderCards(singlePokemon: IPokemonPokemon) {
     .replace("/", "");
   cardImg.setAttribute(
     "src",
-    `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`
+    `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${id}.svg`
   );
   cardId.textContent = id;
   cardName.textContent = singlePokemon.pokemon.name;
@@ -70,15 +70,32 @@ inputText.addEventListener("keyup", ({ key }) => {
 });
 
 const fetchPokemonArr = async (textValue: string) => {
-  const allPokemonURL = `${BASE_URL}pokemon?limit=100&offset=0`;
+  const allPokemonURL = `${BASE_URL}pokemon?limit=1000&offset=0`;
   const response = await fetch(allPokemonURL);
   const data: IPokeAPI = await response.json();
   const allPokemonArr: IPokemon[] = data.results;
-  console.log(allPokemonArr);
+
   const filteredPokemonArr: IPokemon[] = allPokemonArr.filter(
     (singlePokemon: IPokemon) => {
-      singlePokemon.name === textValue;
+      return singlePokemon.name === textValue;
     }
   );
-  console.log(filteredPokemonArr);
+
+  const cardDiv = document.createElement("div") as HTMLDivElement;
+  const cardImg = document.createElement("img") as HTMLImageElement;
+  const cardId = document.createElement("p") as HTMLParagraphElement;
+  const cardName = document.createElement("p") as HTMLParagraphElement;
+  // *=============================================================
+  const id = filteredPokemonArr[0].url
+    .replace("https://pokeapi.co/api/v2/pokemon/", "")
+    .replace("/", "");
+  cardImg.setAttribute(
+    "src",
+    `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${id}.svg`
+  );
+  cardId.textContent = id;
+  cardName.textContent = filteredPokemonArr[0].name;
+  // *=============================================================
+  cardDiv.append(cardImg, cardId, cardName);
+  cardsWrapper.appendChild(cardDiv);
 };
