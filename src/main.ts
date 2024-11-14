@@ -32,6 +32,19 @@ const fetchPokemons = async (buttonValue: string) => {
     renderCards(singlePokemon.pokemon, true);
   });
 };
+
+const fetchDefaultPokemons = async () => {
+  const allPokemonURL = `${BASE_URL}pokemon?limit=50&offset=0`;
+
+  const response = await fetch(allPokemonURL);
+  const data: IPokeAPI = await response.json();
+  const pokemonArr: IPokemon[] = data.results;
+
+  pokemonArr.forEach((singlePokemon: IPokemon) => {
+    renderCards(singlePokemon, true);
+  });
+};
+fetchDefaultPokemons();
 // ^==========================================================
 
 buttons?.forEach((button: HTMLButtonElement) => {
@@ -80,6 +93,12 @@ inputText.addEventListener("keyup", ({ key }) => {
   }
 });
 
+inputText.addEventListener("input", () => {
+  const textValue = inputText.value.trim().toLowerCase();
+
+  fetchPokemonArr(textValue);
+});
+
 const fetchPokemonArr = async (textValue: string) => {
   cardsWrapper.innerHTML = "";
   const allPokemonURL = `${BASE_URL}pokemon?limit=1000&offset=0`;
@@ -89,15 +108,15 @@ const fetchPokemonArr = async (textValue: string) => {
 
   const filteredPokemonArr: IPokemon[] = allPokemonArr.filter(
     (singlePokemon: IPokemon) => {
-      return singlePokemon.name === textValue;
+      return singlePokemon.name.includes(textValue);
     }
   );
-  console.log(filteredPokemonArr);
 
-  renderCards(filteredPokemonArr[0], false);
+  if (filteredPokemonArr.length > 1) {
+    filteredPokemonArr.forEach((pokemon: IPokemon) => {
+      renderCards(pokemon, true);
+    });
+  } else {
+    renderCards(filteredPokemonArr[0], false);
+  }
 };
-
-// const fetchPokeomeType = async (url: string) => {
-//   const response = await fetch(url);
-//   const data = await response.json();
-// };
