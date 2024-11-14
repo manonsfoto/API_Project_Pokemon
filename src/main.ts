@@ -52,7 +52,6 @@ const fetchPokemonArr = async (textValue: string) => {
   const response = await fetch(allPokemonURL);
   const data: IPokeAPI = await response.json();
   const allPokemonArr: IPokemon[] = data.results;
-  console.log(allPokemonArr);
 
   const filteredPokemonArr: IPokemon[] = allPokemonArr.filter(
     (singlePokemon: IPokemon) => {
@@ -88,8 +87,9 @@ inputText.addEventListener("keyup", ({ key }) => {
 
 inputText.addEventListener("input", () => {
   const textValue = inputText.value.trim().toLowerCase();
-
-  fetchPokemonArr(textValue);
+  if (textValue.length > 2) {
+    fetchPokemonArr(textValue);
+  }
 });
 
 // ^==========================================================
@@ -107,8 +107,6 @@ async function renderCards(pokemon: IPokemon, styleType: boolean) {
   const data = await response.json();
   const pokemonType = data.types.map((obj: any) => obj.type.name);
 
-  console.log(pokemonType);
-
   const id = pokemon.url
     .replace("https://pokeapi.co/api/v2/pokemon/", "")
     .replace("/", "");
@@ -125,6 +123,7 @@ async function renderCards(pokemon: IPokemon, styleType: boolean) {
   cardId.classList.add("cardId");
   cardName.classList.add("cardName");
   singleCardType.classList.add("singleCardType");
+  cardType.classList.add("cardType");
   // ========================================================
 
   cardDiv.append(cardImg, cardId, cardName, cardType);
