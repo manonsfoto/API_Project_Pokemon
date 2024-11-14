@@ -147,26 +147,27 @@ input {
   background-repeat: no-repeat;
   background-color: #fff;
   background-size: cover;
-  width: 36rem;
-  height: 27rem;
+  width: 50rem;
+  height: 39rem;
   position: relative;
 }
 .pokedex :nth-child(1) {
   position: absolute;
-  top: 10rem;
-  right: 23rem;
+  top: 17rem;
+  right: 33rem;
 }
-.pokedex :nth-child(2) {
+.pokedexCardId {
   position: absolute;
-  top: 10.2rem;
-  right: 11rem;
+  top: 14.2rem;
+  right: 13rem;
   color: white;
 }
-.pokedex :nth-child(3) {
+.pokedexCardName {
   position: absolute;
-  top: 11.5rem;
-  right: 5.5rem;
-  color: white;
+  top: 13.5rem;
+  right: 34.5rem;
+  font-size: 1rem;
+  color: black;
 }
 
 .toTop {
@@ -180,9 +181,9 @@ input {
 .toTop img {
   width: 100%;
 }
-.pokedexSingleType {
-  position: absolute;
-  top: 11.5rem;
-  right: 5.5rem;
-  color: white;
+.pokedexType {
+  color: #fff;
+  position: relative;
+  top: -1.5rem;
+  right: -47rem;
 }

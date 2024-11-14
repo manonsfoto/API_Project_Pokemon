@@ -120,8 +120,8 @@ async function renderCards(pokemon: IPokemon, styleType: boolean) {
   cardType.appendChild(singleCardType);
   // ========================================================
   cardDiv.classList.add("flex", styleType ? "cardDiv" : "pokedex");
-  cardId.classList.add("cardId");
-  cardName.classList.add("cardName");
+  cardId.classList.add(styleType ? "cardId" : "pokedexCardId");
+  cardName.classList.add(styleType ? "cardName" : "pokedexCardName");
   singleCardType.classList.add(
     styleType ? "singleCardType" : "pokedexSingleType"
   );
