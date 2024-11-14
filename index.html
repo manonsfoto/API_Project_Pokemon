@@ -5,15 +5,16 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script type="module" src="/src/main.ts" defer></script>
-    <title>Pokemon</title>
+    <title>Pokédex</title>
   </head>
-  <body>
-    <header>
-      <h1>Pokemon</h1>
+
+  <body class="flex">
+    <header class="flex">
+      <h1>Pokédex</h1>
       <h2>TYPE</h2>
     </header>
     <main>
-      <section>
+      <section class="sectionInput flex">
         <input type="text" id="inputText" placeholder="Search Pokemon" />
         <div id="buttonsWrapper">
           <button type="button" value="/type/7/">BUG</button>
@@ -35,8 +36,10 @@
           <button type="button" value="/type/14/">PSYCHIC</button>
           <button type="button" value="/type/11/">WATER</button>
         </div>
+
+        <a href="#" class="toTop"> <div>⬆️To the Top</div></a>
       </section>
-      <section id="cardsWrapper"></section>
+      <section id="cardsWrapper" class="flex"></section>
     </main>
   </body>
 </html>
