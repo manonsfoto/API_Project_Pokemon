@@ -45,59 +45,6 @@ const fetchDefaultPokemons = async () => {
   });
 };
 fetchDefaultPokemons();
-// ^==========================================================
-
-buttons?.forEach((button: HTMLButtonElement) => {
-  button?.addEventListener("click", () => {
-    const buttonValue = button.value;
-
-    fetchPokemons(buttonValue);
-  });
-});
-
-// ^==========================================================
-
-function renderCards(pokemon: IPokemon, styleType: boolean) {
-  const cardDiv = document.createElement("div") as HTMLDivElement;
-  const cardImg = document.createElement("img") as HTMLImageElement;
-  const cardId = document.createElement("p") as HTMLParagraphElement;
-  const cardName = document.createElement("p") as HTMLParagraphElement;
-  // ========================================================
-  const id = pokemon.url
-    .replace("https://pokeapi.co/api/v2/pokemon/", "")
-    .replace("/", "");
-  cardImg.setAttribute(
-    "src",
-    `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`
-  );
-  cardId.textContent = "#" + id.padStart(3, "0");
-  cardName.textContent = pokemon.name;
-  // ========================================================
-  if (styleType === true) {
-    cardDiv.classList.add("cardDiv", "flex");
-  } else if (styleType === false) {
-    cardDiv.classList.add("flex", "pokedex");
-  }
-
-  // ========================================================
-  cardDiv.append(cardImg, cardId, cardName);
-  cardsWrapper.appendChild(cardDiv);
-}
-// ^==========================================================
-
-inputText.addEventListener("keyup", ({ key }) => {
-  if (key === "Enter") {
-    const textValue = inputText.value.trim().toLowerCase();
-
-    fetchPokemonArr(textValue);
-  }
-});
-
-inputText.addEventListener("input", () => {
-  const textValue = inputText.value.trim().toLowerCase();
-
-  fetchPokemonArr(textValue);
-});
 
 const fetchPokemonArr = async (textValue: string) => {
   cardsWrapper.innerHTML = "";
@@ -105,6 +52,7 @@ const fetchPokemonArr = async (textValue: string) => {
   const response = await fetch(allPokemonURL);
   const data: IPokeAPI = await response.json();
   const allPokemonArr: IPokemon[] = data.results;
+  console.log(allPokemonArr);
 
   const filteredPokemonArr: IPokemon[] = allPokemonArr.filter(
     (singlePokemon: IPokemon) => {
@@ -120,3 +68,65 @@ const fetchPokemonArr = async (textValue: string) => {
     renderCards(filteredPokemonArr[0], false);
   }
 };
+// ^==========================================================
+
+buttons?.forEach((button: HTMLButtonElement) => {
+  button?.addEventListener("click", () => {
+    const buttonValue = button.value;
+
+    fetchPokemons(buttonValue);
+  });
+});
+
+inputText.addEventListener("keyup", ({ key }) => {
+  if (key === "Enter") {
+    const textValue = inputText.value.trim().toLowerCase();
+
+    fetchPokemonArr(textValue);
+  }
+});
+
+inputText.addEventListener("input", () => {
+  const textValue = inputText.value.trim().toLowerCase();
+
+  fetchPokemonArr(textValue);
+});
+
+// ^==========================================================
+
+async function renderCards(pokemon: IPokemon, styleType: boolean) {
+  const cardDiv = document.createElement("div") as HTMLDivElement;
+  const cardImg = document.createElement("img") as HTMLImageElement;
+  const cardId = document.createElement("p") as HTMLParagraphElement;
+  const cardName = document.createElement("p") as HTMLParagraphElement;
+  const cardType = document.createElement("div") as HTMLDivElement;
+  const singleCardType = document.createElement("p") as HTMLParagraphElement;
+  // ========================================================
+
+  const response = await fetch(pokemon.url);
+  const data = await response.json();
+  const pokemonType = data.types.map((obj: any) => obj.type.name);
+
+  console.log(pokemonType);
+
+  const id = pokemon.url
+    .replace("https://pokeapi.co/api/v2/pokemon/", "")
+    .replace("/", "");
+  cardImg.setAttribute(
+    "src",
+    `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`
+  );
+  cardId.textContent = "#" + id.padStart(3, "0");
+  cardName.textContent = pokemon.name;
+  singleCardType.innerHTML = pokemonType.join("<br>");
+  cardType.appendChild(singleCardType);
+  // ========================================================
+  cardDiv.classList.add("flex", styleType ? "cardDiv" : "pokedex");
+  cardId.classList.add("cardId");
+  cardName.classList.add("cardName");
+  singleCardType.classList.add("singleCardType");
+  // ========================================================
+
+  cardDiv.append(cardImg, cardId, cardName, cardType);
+  cardsWrapper.appendChild(cardDiv);
+}

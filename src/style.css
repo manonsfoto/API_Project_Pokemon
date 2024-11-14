@@ -50,6 +50,9 @@ h1 {
 h2 {
   font-size: 2rem;
 }
+p {
+  font-family: "pokemon_classic";
+}
 .flex {
   display: flex;
   align-items: center;
@@ -61,26 +64,34 @@ button {
   padding: 0.4rem;
   border-radius: 10px;
   border: none;
+  font-family: "pokemon_classic";
 }
 #buttonsWrapper {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 40rem;
+  justify-content: center;
   gap: 0.5rem;
 }
 input {
   padding: 0.4rem;
   border-radius: 10px;
   border: 3px solid #d30a40;
+  font-family: "pokemon_classic";
 }
 .cardDiv {
   border: 1px solid black;
   border-radius: 1rem;
-  width: 10rem;
-  height: 12rem;
+  width: 16rem;
+  height: 18rem;
   padding: 0.5rem;
   background-color: white;
   box-shadow: 3px 3px rgb(50, 50, 50);
 }
+.cardId {
+  font-size: 0.7rem;
+}
+
 #cardsWrapper {
   gap: 1rem;
   flex-direction: row;
@@ -92,6 +103,7 @@ input {
 .pokedex {
   background-image: url(../src/img/Pokedex.png);
   background-repeat: no-repeat;
+  background-color: #fff;
   background-size: cover;
   width: 36rem;
   height: 27rem;
@@ -118,4 +130,5 @@ input {
   position: fixed;
   right: 5rem;
   text-decoration: none;
+  font-family: "pokemon_classic";
 }
