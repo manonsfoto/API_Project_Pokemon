@@ -87,9 +87,8 @@ inputText.addEventListener("keyup", ({ key }) => {
 
 inputText.addEventListener("input", () => {
   const textValue = inputText.value.trim().toLowerCase();
-  if (textValue.length > 1) {
-    fetchPokemonArr(textValue);
-  }
+
+  fetchPokemonArr(textValue);
 });
 
 // ^==========================================================
