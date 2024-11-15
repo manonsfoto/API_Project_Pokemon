@@ -1,0 +1,130 @@
+@font-face {
+    font-family: "pokemon_solid";
+    src: url(./fonts/PokemonSolid.ttf);
+}
+
+@font-face {
+    font-family: "pokemon_classic";
+    src: url(./fonts/PokemonClassic.ttf);
+}
+
+@font-face {
+    font-family: "pokemon_hollow";
+    src: url(./fonts/PokemonHollow.ttf);
+}
+
+:root {
+    --pokemonLightRed: #ff0000;
+    --pokemonDarkRed: #cc0000;
+    --pokemonBlue: #3b4cca;
+    --pokemonYellow: #ffde00;
+    --pokemonDarkYellow: #b3a125;
+  }
+
+html {
+    font-family: sans-serif;
+    scroll-behavior: smooth;
+    }
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    }
+
+body {
+    padding: 1rem 1rem 0 1rem;
+    margin: 0 auto;
+    gap: 2rem;
+    background-image: url(./img/pikachu.png);
+    background-position: center;
+    background-size: contain;
+    }
+
+h1, h2 {
+    font-family: "pokemon_solid";
+    font-size: 4rem;
+    color: var(--pokemonYellow);
+}
+
+h1 {
+    font-size: 4rem;
+}
+
+h2 { 
+    font-size: 2rem;
+}
+    
+.flex {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 1rem;
+    }
+    
+button {
+      padding: 0.4rem;
+      border-radius: 10px;
+      border: none;
+    }
+    
+#buttonsWrapper {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 0.5rem;
+    }
+
+    input {
+      padding: 0.4rem;
+      border-radius: 10px;
+      border: 3px solid #d30a40;
+    }
+
+.cardDiv {
+    border: 1px solid black;
+    border-radius: 1rem;
+    width: 10rem;
+    height: 12rem;
+    padding: 0.5rem;
+    background-color: white;
+    box-shadow: 3px 3px rgb(21, 21, 21);
+}
+
+    #cardsWrapper {
+      gap: 1rem;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: center;
+      width: 60rem;
+      margin-top: 2rem;
+    }
+    .pokedex {
+      background-image: url(../src/img/Pokedex.png);
+      background-repeat: no-repeat;
+      background-size: cover;
+      width: 36rem;
+      height: 27rem;
+      position: relative;
+    }
+    .pokedex :nth-child(1) {
+      position: absolute;
+      top: 10rem;
+      right: 23rem;
+    }
+    .pokedex :nth-child(2) {
+      position: absolute;
+      top: 10.2rem;
+      right: 11rem;
+      color: white;
+    }
+    .pokedex :nth-child(3) {
+      position: absolute;
+      top: 11.5rem;
+      right: 6.5rem;
+      color: white;
+    }
+    .toTop {
+      position: fixed;
+      right: 5rem;
+      text-decoration: none;
+    }

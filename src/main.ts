@@ -20,70 +20,88 @@ const fetchPokemons= async(buttonValue: string)=>{
   const pokemonArr = data.pokemon;
   
   pokemonArr.forEach((singlePokemon: IPokemonPokemon) => {
-    renderCards(singlePokemon);
+    renderCards(singlePokemon.pokemon, true);
   });
 };
+
+const fetchDefaultPokemons = async () => {
+  const allPokemonURL = `${BASE_URL}pokemon?limit=50&offset=0`;
+
+  const response = await fetch(allPokemonURL);
+  const data: IPokeAPI = await response.json();
+  const pokemonArr: IPokemon[] = data.results;
+
+  pokemonArr.forEach((singlePokemon: IPokemon) => {
+    renderCards(singlePokemon, true);
+  });
+};
+fetchDefaultPokemons();
+
 
 console.log(buttons);
 
 buttons?.forEach((button: HTMLButtonElement) => {
   button?.addEventListener("click", () => {
     const buttonValue = button.value
-    console.log(buttonValue);
     fetchPokemons(buttonValue);
   })
 })
 
-function renderCards(singlePokemon: IPokemonPokemon){
+function renderCards(pokemon: IPokemon, styleType: boolean){
   const cardDiv = document.createElement("div") as HTMLDivElement;
   const cardImg = document.createElement("img") as HTMLImageElement;
   const cardId = document.createElement("p") as HTMLParagraphElement;
   const cardName = document.createElement("p") as HTMLParagraphElement;
 // ==========================================
 
-const id = singlePokemon.pokemon.url.replace("https://pokeapi.co/api/v2/pokemon/", "").replace("/", "")
+const id = pokemon.url.replace("https://pokeapi.co/api/v2/pokemon/", "").replace("/", "")
 
-cardImg.setAttribute("src", `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${id}.svg`);  
-cardId.textContent = id;
-cardName.textContent = singlePokemon.pokemon.name;
+cardImg.setAttribute("src", `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`);  
+cardId.textContent = "#" + id.padStart(3,"0");
+cardName.textContent = pokemon.name;
+
+if (styleType === true) {
+  cardDiv.classList.add("cardDiv", "flex");
+} else if (styleType === false) {
+  cardDiv.classList.add("flex", "pokedex");
+}
 // ==============================
 cardDiv.append(cardImg, cardId, cardName);
 cardsWrapper.appendChild(cardDiv);
 }
 
-
 inputText.addEventListener("keyup", ({ key }) => {
   if (key === "Enter") {
     const textValue = inputText.value.trim().toLowerCase();
-    console.log(textValue);
     fetchPokemonArr(textValue);
   }
 });
 
+
+inputText.addEventListener("input", () => {
+  const textValue = inputText.value.trim().toLowerCase();
+
+  fetchPokemonArr(textValue);
+});
+
 const fetchPokemonArr = async (textValue: string) => {
+  cardsWrapper.innerHTML = "";
   const allPokemonURL = `${BASE_URL}pokemon?limit=1000&offset=0`;
   const response = await fetch(allPokemonURL);
   const data: IPokeAPI = await response.json();
   const allPokemonArr: IPokemon[] = data.results;
-  console.log(allPokemonArr);
-  const filteredPokemonArr: IPokemon[] = allPokemonArr.filter((singlePokemon: IPokemon) => {
-    return singlePokemon.name === textValue;
-  }
-);
 
-
-    const cardDiv = document.createElement("div") as HTMLDivElement;
-    const cardImg = document.createElement("img") as HTMLImageElement;
-    const cardId = document.createElement("p") as HTMLParagraphElement;
-    const cardName = document.createElement("p") as HTMLParagraphElement;
-  // ==========================================
-  // index 0, weil nur ein Objekt drin
-  const id = filteredPokemonArr[0].url.replace("https://pokeapi.co/api/v2/pokemon/", "").replace("/", "")
+  const filteredPokemonArr: IPokemon[] = allPokemonArr.filter(
+    (singlePokemon: IPokemon) => {
+      return singlePokemon.name.includes(textValue);
+    }
+  );
   
-  cardImg.setAttribute("src", `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${id}.svg`);  
-  cardId.textContent = id;
-  cardName.textContent = filteredPokemonArr[0].name;
-  // ==============================
-  cardDiv.append(cardImg, cardId, cardName);
-  cardsWrapper.appendChild(cardDiv);
+  if (filteredPokemonArr.length > 1) {
+    filteredPokemonArr.forEach((pokemon: IPokemon) => {
+      renderCards(pokemon, true);
+    });
+  } else {
+    renderCards(filteredPokemonArr[0], false);
+  }
 };
